@@ -1,10 +1,12 @@
 // @flow
-import { FETCH_DOCUMENT_COUNTS } from './types'
+import type { ThunkAction } from './__types__'
 
-export const addDocumentCounts = () => (dispatch: Function) => (
+export const FETCH_DOCUMENT_COUNTS_SUCCESS = 'FETCH_DOCUMENT_COUNTS_SUCCESS'
+
+export const addDocumentCounts = (): ThunkAction => (dispatch) => (
   setTimeout(() => (
     dispatch({
-      type: FETCH_DOCUMENT_COUNTS,
+      type: FETCH_DOCUMENT_COUNTS_SUCCESS,
       count: 1
     })
   ), 5000)

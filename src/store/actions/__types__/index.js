@@ -1,10 +1,15 @@
 // @flow
-import { FETCH_DOCUMENT_COUNTS } from '../types'
+import type { Dispatch } from 'redux'
 
-export type FetchDocumentCounts = {
-  type: typeof FETCH_DOCUMENT_COUNTS,
+export type FetchDocumentCountsSuccess = {
+  type: 'FETCH_DOCUMENT_COUNTS_SUCCESS',
   count: number
 }
 
 export type Action =
-| FetchDocumentCounts
+| FetchDocumentCountsSuccess
+
+export type ThunkAction = (
+  dispatch: Dispatch<Action>,
+  getState: () => Object,
+  extraArgument: any) => any
