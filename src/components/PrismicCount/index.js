@@ -1,37 +1,17 @@
 // @flow
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { addDocumentCounts } from '../../store/actions/prismic'
-import type { FetchedDocumentCount } from '../../store/reducers/prismicDocs'
+import React from 'react'
+import type { PrismicDocumentMeta } from '../../store/actions/__types__'
 
-class PrismicCount extends Component {
-  componentDidMount () {
-    this.props.addDocumentCounts()
-  }
-
-  renderDocumentCount () {
-    const { prismicDocs } = this.props
-
-    if (prismicDocs && prismicDocs.count) {
-      return prismicDocs.count
-    }
-  }
-
-  render () {
-    return (
-      <div>
-        Hi there.
-        {this.renderDocumentCount()}
-      </div>
-    )
-  }
-}
-
-const mapStateToProps = ({
-  prismicDocs
+const PrismicCount = ({
+  documents = []
 }: {
-  prismicDocs?: FetchedDocumentCount
-}) => ({ prismicDocs })
-const mapDispatchToProps = { addDocumentCounts }
+  documents: Array<PrismicDocumentMeta>
+}) => (
+  <div>
+    {documents.map((doc, i) => (
+      <p key={i}>{doc.count} of {doc.description}</p>
+    ))}
+  </div>
+)
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrismicCount)
+export default PrismicCount

@@ -1,9 +1,9 @@
 // @flow
 import { combineReducers } from 'redux'
-import prismicDocs from './prismicDocs.js'
+import prismic from './prismic.js'
 
 const reducers = {
-  prismicDocs
+  prismic
 }
 
 const rootReducer = combineReducers(reducers)
