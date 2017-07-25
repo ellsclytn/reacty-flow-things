@@ -2,6 +2,7 @@
 import prismic from 'prismic-javascript'
 import type {
   PrismicDocument,
+  PrismicDocumentCount,
   PrismicDocumentMeta,
   ThunkAction
 } from './__types__'
@@ -55,10 +56,19 @@ const fetchPrismicCount = (document: PrismicDocument) => (
 
 export const addDocumentCounts = (): ThunkAction => (dispatch) => (
   Promise.all(documentTypes.map(fetchPrismicCount))
-  .then((documents: Array<PrismicDocumentMeta>) => {
+  .then((documentCounts: Array<PrismicDocumentCount>) => {
+    const total = documentCounts.reduce((acc, prismicDocument) => (
+      acc + prismicDocument.count
+    ), 0)
+
+    const documentTypes: Array<PrismicDocumentMeta> = documentCounts.map((prismicDocument) => ({
+      ...prismicDocument,
+      percentage: prismicDocument.count / total * 100
+    }))
+
     dispatch({
       type: FETCH_DOCUMENT_COUNTS_SUCCESS,
-      documents
+      documentTypes
     })
   })
 )

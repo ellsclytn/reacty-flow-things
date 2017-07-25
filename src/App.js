@@ -16,7 +16,7 @@ class App extends Component {
 
     return (
       <div className='App'>
-        { prismic.documents ? <PrismicCount documents={prismic.documents} /> : null }
+        { prismic.documentTypes ? <PrismicCount documentTypes={prismic.documentTypes} /> : null }
       </div>
     )
   }

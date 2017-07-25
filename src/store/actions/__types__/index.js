@@ -6,11 +6,18 @@ export type PrismicDocument = {
   description: string
 }
 
-export type PrismicDocumentMeta = PrismicDocument & { count: number }
+export type PrismicDocumentCount = PrismicDocument & {
+  count: number
+}
+
+export type PrismicDocumentMeta = PrismicDocument & {
+  count: number,
+  percentage: number
+}
 
 export type FetchDocumentCountsSuccess = {
   type: 'FETCH_DOCUMENT_COUNTS_SUCCESS',
-  documents: Array<PrismicDocumentMeta>
+  documentTypes: Array<PrismicDocumentMeta>
 }
 
 export type Action =

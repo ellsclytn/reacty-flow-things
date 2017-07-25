@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "flow-bin": "^0.51.0",
+    "numbro": "^1.11.0",
     "prismic-javascript": "^1.1.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
