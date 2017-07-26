@@ -10,14 +10,15 @@ export type PrismicDocumentCount = PrismicDocument & {
   count: number
 }
 
-export type PrismicDocumentMeta = PrismicDocument & {
-  count: number,
+export type PieChartData = {
+  label: string,
+  value: number,
   percentage: number
 }
 
 export type FetchDocumentCountsSuccess = {
   type: 'FETCH_DOCUMENT_COUNTS_SUCCESS',
-  documentTypes: Array<PrismicDocumentMeta>
+  documentTypes: Array<PieChartData>
 }
 
 export type Action =
@@ -26,4 +27,5 @@ export type Action =
 export type ThunkAction = (
   dispatch: Dispatch<Action>,
   getState: () => Object,
-  extraArgument: any) => any
+  extraArgument: any
+) => any

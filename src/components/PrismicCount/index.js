@@ -1,18 +1,58 @@
 // @flow
-import React from 'react'
+import React, { Component } from 'react'
 import numbro from 'numbro'
-import type { PrismicDocumentMeta } from '../../store/actions/__types__'
+import PieChart from 'react-svg-piechart'
+import type { PieChartData } from '../../store/actions/__types__'
 
-const PrismicCount = ({
-  documentTypes = []
-}: {
-  documentTypes: Array<PrismicDocumentMeta>
-}) => (
-  <div>
-    {documentTypes.map((doc, i) => (
-      <p key={i}>{numbro(doc.count).format('0,0')} ({numbro(doc.percentage).format('0.00')}%) of {doc.description}</p>
-    ))}
-  </div>
-)
+class PrismicCount extends Component {
+  handleMouseEnterOnSector: Function
+  state: {
+    expandedSector: number | null
+  }
+
+  constructor () {
+    super()
+
+    this.state = {
+      expandedSector: null
+    }
+
+    this.handleMouseEnterOnSector = this.handleMouseEnterOnSector.bind(this)
+  }
+
+  handleMouseEnterOnSector (sector: number | null) {
+    this.setState({expandedSector: sector})
+  }
+
+  render () {
+    const { documentTypes = [] }: {
+      documentTypes: Array<PieChartData>
+    } = this.props
+
+    const { expandedSector } = this.state
+
+    return (
+      <div style={{maxWidth: '80vh'}}>
+        <PieChart
+          data={documentTypes}
+          expandedSector={expandedSector}
+          onSectorHover={this.handleMouseEnterOnSector}
+          sectorStrokeWidth={1}
+          expandOnHover
+          shrinkOnTouchEnd
+        />
+        <div>
+          {documentTypes.map((documentType, i) => (
+            <div key={i}>
+              <span style={{fontWeight: this.state.expandedSector === i ? 'bold' : null}}>
+                {numbro(documentType.percentage).format('0.00')}% ({numbro(documentType.value).format('0,0')}) {documentType.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+}
 
 export default PrismicCount

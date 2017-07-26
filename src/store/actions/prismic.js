@@ -3,7 +3,7 @@ import prismic from 'prismic-javascript'
 import type {
   PrismicDocument,
   PrismicDocumentCount,
-  PrismicDocumentMeta,
+  PieChartData,
   ThunkAction
 } from './__types__'
 import {
@@ -44,14 +44,16 @@ const fetchPrismicCount = (document: PrismicDocument) => (
       prismic.Predicates.at('document.type', document.type),
       { pageSize: 1 }
     )
-  }).then((res: { total_results_size: number }) => {
+  })
+  .then((res: { total_results_size: number }) => {
     const { total_results_size: count } = res
 
     return {
       ...document,
       count
     }
-  }).catch((err) => (console.log(err)))
+  })
+  .catch((err) => (console.log(err)))
 )
 
 export const addDocumentCounts = (): ThunkAction => (dispatch) => (
@@ -61,10 +63,13 @@ export const addDocumentCounts = (): ThunkAction => (dispatch) => (
       acc + prismicDocument.count
     ), 0)
 
-    const documentTypes: Array<PrismicDocumentMeta> = documentCounts.map((prismicDocument) => ({
-      ...prismicDocument,
-      percentage: prismicDocument.count / total * 100
+    const documentTypes: Array<PieChartData> = documentCounts
+    .map(({ description, count }) => ({
+      label: description,
+      value: count,
+      percentage: count / total * 100
     }))
+    .sort((a, b) => (b.value - a.value))
 
     dispatch({
       type: FETCH_DOCUMENT_COUNTS_SUCCESS,
