@@ -7,10 +7,12 @@ export type PrismicDocument = {
 }
 
 export type PrismicDocumentCount = PrismicDocument & {
+  color: string,
   count: number
 }
 
 export type PieChartData = {
+  color: string,
   label: string,
   value: number,
   percentage: number

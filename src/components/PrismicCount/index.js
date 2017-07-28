@@ -49,6 +49,9 @@ class PrismicCount extends Component {
               </span>
             </div>
           ))}
+          {numbro(documentTypes.reduce((acc, documentType) => (
+            acc + documentType.value
+          ), 0)).format('0,0')} documents total
         </div>
       </div>
     )
